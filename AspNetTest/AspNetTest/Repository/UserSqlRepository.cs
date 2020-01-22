@@ -10,7 +10,7 @@ namespace AspNetTest.Repository
     {
         public List<User> GetUsers()
         {
-            var sqlQuery = "SELECT ID,Name,Login,Password FROM ~Users~ ORDER BY ID";
+            var sqlQuery = "SELECT ~ID~,~Name~,~Login~,~Password~ FROM ~Users~";
             WRKDataBase wrkDataBase;
             wrkDataBase = new WRKDataBase();
             List<User> ret = new List<User>();
