@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AspNetTest.Models;
+using Npgsql;
 
 namespace AspNetTest.Repository
 {
@@ -10,15 +11,17 @@ namespace AspNetTest.Repository
     {
         public List<User> GetUsers()
         {
-            var sqlQuery = "SELECT ~ID~,~Name~,~Login~,~Password~ FROM ~Users~";
-            WRKDataBase wrkDataBase;
-            wrkDataBase = new WRKDataBase();
+            var sqlQuery = "SELECT ID,Name,Login,Password FROM Users";
+            DBConnection connection = new DBConnection();
+            NpgsqlConnection conn = new NpgsqlConnection(connection.GetConnectionString());
+            NpgsqlCommand comm = new NpgsqlCommand(sqlQuery, conn);
             List<User> ret = new List<User>();
-            var rdr = wrkDataBase.CreateReader(sqlQuery);
-            while (rdr.Read())
-                ret.Add(new User(rdr));
-            rdr.Close();
-            wrkDataBase.Dispose();
+            conn.Open(); //Открываем соединение.
+            var reader = comm.ExecuteReader(); //Выполняем нашу команду.
+            while (reader.Read())
+                ret.Add(new User(reader));
+            reader.Close();
+            conn.Close(); //Закрываем соединение.
             return ret;
         }
     }
