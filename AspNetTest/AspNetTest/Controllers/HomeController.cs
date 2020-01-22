@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using AspNetTest.Models;
+using AspNetTest.Repository;
 
 namespace AspNetTest.Controllers
 {
@@ -20,7 +21,10 @@ namespace AspNetTest.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var model = new HomeViewModel();
+            var repo = new UserSqlRepository();
+            model.Users = repo.GetUsers();
+            return View(model);
         }
 
         public IActionResult Privacy()
