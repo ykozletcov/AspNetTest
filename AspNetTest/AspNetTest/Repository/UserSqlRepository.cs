@@ -11,7 +11,7 @@ namespace AspNetTest.Repository
     {
         public List<User> GetUsers()
         {
-            var sqlQuery = "SELECT ID,Name,Login,Password FROM Users";
+            var sqlQuery = "SELECT ID,Name,Login,Password FROM \"Users\"";
             DBConnection connection = new DBConnection();
             NpgsqlConnection conn = new NpgsqlConnection(connection.GetConnectionString());
             NpgsqlCommand comm = new NpgsqlCommand(sqlQuery, conn);
