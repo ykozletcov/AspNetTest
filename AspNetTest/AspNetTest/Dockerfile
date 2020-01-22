@@ -1,22 +1,19 @@
-#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
+# https://hub.docker.com/_/microsoft-dotnet-core
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
+WORKDIR /source
 
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim AS base
+# copy csproj and restore as distinct layers
+COPY *.sln .
+COPY AspNetTest/*.csproj ./AspNetTest/
+RUN dotnet restore -r linux-arm
+
+# copy everything else and build app
+COPY AspNetTest/. ./AspNetTest/
+WORKDIR /source/AspNetTest
+RUN dotnet publish -c release -o /app -r linux-arm --self-contained false --no-restore
+
+# final stage/image
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim-arm32v7
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
-
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
-WORKDIR /src
-COPY ["AspNetTest/AspNetTest.csproj", "AspNetTest/"]
-RUN dotnet restore "AspNetTest/AspNetTest.csproj"
-COPY . .
-WORKDIR "/src/AspNetTest"
-RUN dotnet build "AspNetTest.csproj" -c Release -o /app/build
-
-FROM build AS publish
-RUN dotnet publish "AspNetTest.csproj" -c Release -o /app/publish
-
-FROM base AS final
-WORKDIR /app
-COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "AspNetTest.dll"]
+COPY --from=build /app ./
+ENTRYPOINT ["./AspNetTest"]
