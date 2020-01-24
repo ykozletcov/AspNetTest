@@ -7,5 +7,12 @@ namespace AspNetTest.Models
     {
         public List<User> Users { get; set; }
 
+        public User User { get; set; }
+
+        public HomeViewModel()
+        {
+            User = new User();
+            Users = new List<User>();
+        }
     }
 }
