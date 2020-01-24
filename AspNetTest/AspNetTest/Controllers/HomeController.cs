@@ -44,7 +44,7 @@ namespace AspNetTest.Controllers
             return View();
         }
         [HttpPost]
-        public  Task<IActionResult> Create(User user)
+        public  ActionResult Create(User user)
         {
             repository.CreateUser(user);
             return RedirectToAction("Index");
