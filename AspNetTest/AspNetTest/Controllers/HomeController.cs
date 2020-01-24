@@ -13,17 +13,18 @@ namespace AspNetTest.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private SqlRepository repository;
 
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
+            repository = new SqlRepository(logger);
         }
 
         public IActionResult Index()
         {
             var model = new HomeViewModel();
-            var repo = new UserSqlRepository();
-            model.Users = repo.GetUsers();
+            model.Users = repository.GetUsers();
             return View(model);
         }
 
