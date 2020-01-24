@@ -20,7 +20,8 @@ namespace AspNetTest.Repository
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         { 
             DBConnection dbConnection = new DBConnection();
-            optionsBuilder.UseNpgsql(dbConnection.GetConnectionString());
+            optionsBuilder.UseNpgsql(dbConnection.GetConnectionString(),
+                options => options.SetPostgresVersion(new Version(9, 6)));
         }
     }
 }
