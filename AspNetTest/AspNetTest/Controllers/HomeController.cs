@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using AspNetTest.Models;
 using AspNetTest.Repository;
+using AspNetTest.ViewModels;
+using SharedLibrary.Models;
 
 namespace AspNetTest.Controllers
 {

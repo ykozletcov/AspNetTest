@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
+using SharedLibrary.Models;
 
-namespace AspNetTest.Models
+namespace AspNetTest.ViewModels
 {
     public class HomeViewModel
     {

@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
-using AspNetTest.Repository;
 
-namespace AspNetTest.Models
+namespace SharedLibrary.Models
 {
     public class User
     {
@@ -13,5 +12,7 @@ namespace AspNetTest.Models
         public string Name { get; set; }
         public string Login { get; set; }
         public string Password { get; set; }
+        public string Email { get; set; }
+        public DateTime CreateDate { get; set; }
     }
 }

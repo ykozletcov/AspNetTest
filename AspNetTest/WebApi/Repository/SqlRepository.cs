@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AspNetTest.Controllers;
-using AspNetTest.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SharedLibrary.Models;
+using WebApi.Models;
 
-namespace AspNetTest.Repository
+namespace WebApi.Repository
 {
     public enum UpdMode
     { 
@@ -96,33 +95,6 @@ namespace AspNetTest.Repository
                 {
                     db.Users.Remove(user);
                     return db.SaveChanges();
-                }
-            }
-            catch (Exception e)
-            {
-                _logger.Log(LogLevel.Error, e.ToString());
-                throw;
-            }
-        }
-
-        public List<Role> GetUseRoles(int userID)
-        {
-            try
-            {
-                using (ApplicationContext db = new ApplicationContext())
-                {
-                    var UserRowCollection = db.UserRolesCollections.Where(x => x.UserId == userID).ToList();
-                    List<Role> roles = new List<Role>(); 
-                    foreach (var row in UserRowCollection)
-                    {
-                        var role = db.Roles.Where(x => x.ID == row.RoleID).FirstOrDefault();
-                        if (role!=null)
-                        {
-                            roles.Add(role);
-                        }
-                    }
-
-                    return roles;
                 }
             }
             catch (Exception e)
