@@ -15,5 +15,11 @@ namespace AspNetTest.ViewModels
             User = new User();
             Users = new List<User>();
         }
+
+        public bool PullRequestTestMethod()
+        {
+            return true;
+        }
+
     }
 }
