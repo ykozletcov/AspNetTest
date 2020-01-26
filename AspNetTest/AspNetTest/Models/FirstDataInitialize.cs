@@ -32,11 +32,19 @@ namespace AspNetTest.Models
                 var dbroles = db.Roles.ToList();
                 if (admindb==null)
                 {
+                    var userrole = dbroles.Where(x => x.Name == "User").FirstOrDefault();
+                    var adminrole = dbroles.Where(x => x.Name == "Admin").FirstOrDefault();
+                    UserRoles userRoles = new UserRoles(user.ID,userrole.ID);
+                    UserRoles admroles = new UserRoles(user.ID, adminrole.ID);
+                    admn.UserRoles.Add(userRoles);
+                    admn.UserRoles.Add(admroles);
                     db.Users.Add(admn);
                 }
                 if (userdb==null)
                 {
                     var userrole = dbroles.Where(x => x.Name == "User").FirstOrDefault();
+                    UserRoles userRoles = new UserRoles(user.ID, userrole.ID); 
+                    user.UserRoles.Add(userRoles);
                     db.Users.Add(user);
                 }
                 db.SaveChanges();

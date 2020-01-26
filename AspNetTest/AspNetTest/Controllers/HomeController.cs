@@ -41,15 +41,6 @@ namespace AspNetTest.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public IActionResult Create()
-        {
-            return View();
-        }
-        [HttpPost]
-        public  ActionResult Create(User user)
-        {
-            repository.CreateUser(user);
-            return RedirectToAction("Index");
-        }
+      
     }
 }

@@ -12,7 +12,6 @@ namespace AspNetTest.Models
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
-        public DbSet<UserRolesCollectionRow> UserRolesCollections { get; set; }
 
 
         public ApplicationContext()
@@ -25,6 +24,21 @@ namespace AspNetTest.Models
             ConfigLoader loader = new ConfigLoader();
             optionsBuilder.UseNpgsql(loader.Config.ConnectionString.GetConnectionString(),
                 options => options.SetPostgresVersion(new Version(9, 6)));
+        }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<UserRoles>()
+                .HasKey(t => new { t.UserId, t.RoleId });
+
+            modelBuilder.Entity<UserRoles>()
+                .HasOne(sc => sc.User)
+                .WithMany(s => s.UserRoles)
+                .HasForeignKey(sc => sc.UserId);
+
+            modelBuilder.Entity<UserRoles>()
+                .HasOne(sc => sc.Role)
+                .WithMany(c => c.UserRoles)
+                .HasForeignKey(sc => sc.RoleId);
         }
     }
 }

@@ -105,31 +105,6 @@ namespace AspNetTest.Repository
             }
         }
 
-        public List<Role> GetUseRoles(int userID)
-        {
-            try
-            {
-                using (ApplicationContext db = new ApplicationContext())
-                {
-                    var UserRowCollection = db.UserRolesCollections.Where(x => x.UserId == userID).ToList();
-                    List<Role> roles = new List<Role>(); 
-                    foreach (var row in UserRowCollection)
-                    {
-                        var role = db.Roles.Where(x => x.ID == row.RoleID).FirstOrDefault();
-                        if (role!=null)
-                        {
-                            roles.Add(role);
-                        }
-                    }
-
-                    return roles;
-                }
-            }
-            catch (Exception e)
-            {
-                _logger.Log(LogLevel.Error, e.ToString());
-                throw;
-            }
-        }
+      
     }
 }

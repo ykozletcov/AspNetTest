@@ -9,5 +9,10 @@ namespace SharedLibrary.Models
         public Guid ID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public List<UserRoles> UserRoles { get; set; }
+        public Role()
+        {
+            UserRoles = new List<UserRoles>();
+        }
     }
 }
